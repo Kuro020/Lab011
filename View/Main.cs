@@ -47,6 +47,20 @@ namespace Lab011.View
                 {
                     throw new Exception("Informe o valor procurado para a troca.");
                 }
+
+                System.IO.FileInfo[] arquivos = new System.IO.DirectoryInfo(tbxEndereco.Text).GetFiles();
+
+                foreach(var arquivo in arquivos)
+                {
+                    string novoNome = tbxEndereco.Text + "\\" + arquivo.Name.Replace(tbxDe.Text, tbxPara.Text);
+                    
+                    if (!System.IO.File.Exists(novoNome))
+                    {
+                        arquivo.CopyTo(novoNome);
+                        arquivo.Delete();
+                    }
+                }
+                MessageBox.Show("Troca de nome efetuada com sucesso.","Aviso",MessageBoxButtons.OK,MessageBoxIcon.Information);
             }
             catch (Exception ex)
             {
